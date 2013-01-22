@@ -1,0 +1,329 @@
+mkdir -p build
+echo 'proc start {m} {vsim -L unisims_ver -L unimacro_ver -L xilinxcorelib_ver -L secureip work.glbl $m}' \
+	| cat - tests/MIPS150.do > build/MIPS150.do 
+mkdir -p build
+(cd build; vlib work; vmap work work)
+Copying /opt/modeltech/linux_x86_64/../modelsim.ini to modelsim.ini
+Modifying modelsim.ini
+(cd build; for file in /opt/Xilinx/14.1/ISE_DS/ISE/verilog/mti_se/10.1b_2/lin64/secureip /opt/Xilinx/14.1/ISE_DS/ISE/verilog/mti_se/10.1b_2/lin64/simprims_ver /opt/Xilinx/14.1/ISE_DS/ISE/verilog/mti_se/10.1b_2/lin64/unimacro_ver /opt/Xilinx/14.1/ISE_DS/ISE/verilog/mti_se/10.1b_2/lin64/unisims_ver /opt/Xilinx/14.1/ISE_DS/ISE/verilog/mti_se/10.1b_2/lin64/xilinxcorelib_ver; do \
+	vmap $(basename $file) $file || exit 1; done)
+Modifying modelsim.ini
+Modifying modelsim.ini
+Modifying modelsim.ini
+Modifying modelsim.ini
+Modifying modelsim.ini
+(cd build; \
+	vlog +acc -vopt -source -nocovercells  \
+	/opt/Xilinx/14.1/ISE_DS/ISE/verilog/src/glbl.v \
+	|| exit 1)
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module glbl
+
+Top level modules:
+	glbl
+(cd build; for file in ../src/DataPath.v ../src/IORegister.v ../src/MIPS150.v ../src/RegFile.v ../src/ALU.v ../src/UART.v ../src/UAReceive.v ../src/UATransmit.v ../src/dmem_blk_ram/dmem_blk_ram.v ../src/imem_blk_ram/imem_blk_ram.v ../src/ml505top.v ../src/ALUdec.v ../src/HazardUnit.v ../src/Comparator.v ../src/Control.v ../src/JumpAddress.v ../src/LoadShifter.v ../src/MEM_CTRL.v ../src/MIPS150Testbench.v ../src/MUXn_2.v ../src/MUXn_4.v ../src/Next_PC_Address.v ../src/testbenches/ControlTestbench.v ../src/testbenches/DataPathTestbench.v ../src/testbenches/HazardUnitTestbench.v ../src/testbenches/LoadShifterTestbench.v ../src/testbenches/RegFileTestbench.v ../src/testbenches/EchoTestbench.v ../src/testbenches/MemCtrlTestbench.v ../src/testbenches/Next_PCAddressTestbench.v ../src/ComparatorTestbench.v ../src/muxn_4testbench.v; do \
+	vlog +acc -vopt -source -nocovercells +incdir+../../src+incdir+../../src/dmem_blk_ram+incdir+../../src/dmem_blk_ram/tmp+incdir+../../src/dmem_blk_ram/tmp/_xmsgs+incdir+../../src/dmem_blk_ram/tmp/_cg+incdir+../../src/dmem_blk_ram/xlnx_auto_0_xdb+incdir+../../src/imem_blk_ram+incdir+../../src/imem_blk_ram/tmp+incdir+../../src/imem_blk_ram/tmp/_xmsgs+incdir+../../src/imem_blk_ram/tmp/_cg+incdir+../../src/imem_blk_ram/xlnx_auto_0_xdb+incdir+../../src/testbenches ../$file || exit 1; done)
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module DataPath
+
+Top level modules:
+	DataPath
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module IORegister
+
+Top level modules:
+	IORegister
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module MIPS150
+
+Top level modules:
+	MIPS150
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module RegFile
+
+Top level modules:
+	RegFile
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module ALU
+
+Top level modules:
+	ALU
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module UART
+
+Top level modules:
+	UART
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module UAReceive
+
+Top level modules:
+	UAReceive
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module UATransmit
+
+Top level modules:
+	UATransmit
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module dmem_blk_ram
+
+Top level modules:
+	dmem_blk_ram
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module imem_blk_ram
+
+Top level modules:
+	imem_blk_ram
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module ml505top
+
+Top level modules:
+	ml505top
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module ALUdec
+
+Top level modules:
+	ALUdec
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module hazardunit
+
+Top level modules:
+	hazardunit
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module Comparator
+
+Top level modules:
+	Comparator
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module Control
+
+Top level modules:
+	Control
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module JumpAddress
+
+Top level modules:
+	JumpAddress
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module LoadShifter
+
+Top level modules:
+	LoadShifter
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module MEM_CTRL
+
+Top level modules:
+	MEM_CTRL
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module MIPS150Testbench
+
+Top level modules:
+	MIPS150Testbench
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module MUXn_2
+
+Top level modules:
+	MUXn_2
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module MUXn_4
+
+Top level modules:
+	MUXn_4
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module Next_PC_Address
+
+Top level modules:
+	Next_PC_Address
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module ControlTestbench
+
+Top level modules:
+	ControlTestbench
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module DataPathTestbench
+
+Top level modules:
+	DataPathTestbench
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module HazardUnitTestbench
+
+Top level modules:
+	HazardUnitTestbench
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module LoadShifterTestbench
+
+Top level modules:
+	LoadShifterTestbench
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module RegFileTestbench
+
+Top level modules:
+	RegFileTestbench
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module EchoTestbench
+
+Top level modules:
+	EchoTestbench
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module MemCtrlTestbench
+
+Top level modules:
+	MemCtrlTestbench
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module Next_PCAddressTestbench
+
+Top level modules:
+	Next_PCAddressTestbench
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module ComparatorTestbench
+
+Top level modules:
+	ComparatorTestbench
+Model Technology ModelSim SE-64 vlog 10.1b_2 Compiler 2012.07 Jul  4 2012
+-- Compiling module muxn_4testbench
+
+Top level modules:
+	muxn_4testbench
+(cd build; vmake > Makefile)
+make -C build
+make[1]: Entering directory `/home/cc/cs150/fa12/class/cs150-by/team41/hardware/sim/build'
+make[1]: Nothing to be done for `whole_library'.
+make[1]: Leaving directory `/home/cc/cs150/fa12/class/cs150-by/team41/hardware/sim/build'
+touch build/.status
+mkdir -p results
+(cd build; \
+	vsim < ../build/MIPS150.do | tee ../results/MIPS150.transcript)
+Reading /opt/modeltech/tcl/vsim/pref.tcl 
+
+# 10.1b_2
+
+proc start {m} {vsim -L unisims_ver -L unimacro_ver -L xilinxcorelib_ver -L secureip work.glbl $m}
+start MIPS150Testbench
+# vsim -L unisims_ver -L unimacro_ver -L xilinxcorelib_ver -L secureip work.glbl MIPS150Testbench 
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: ../../src/DataPath.v(400): (vopt-2241) Connection width does not match width of port 'A'. The port definition is at: ../../src/ALU.v(16).
+# ** Warning: ../../src/DataPath.v(400): (vopt-2241) Connection width does not match width of port 'B'. The port definition is at: ../../src/ALU.v(16).
+# ** Warning: ../../src/DataPath.v(406): (vopt-2241) Connection width does not match width of port 'A'. The port definition is at: ../../src/Comparator.v(25).
+# ** Warning: ../../src/DataPath.v(406): (vopt-2241) Connection width does not match width of port 'B'. The port definition is at: ../../src/Comparator.v(26).
+# ** Warning: ../../src/DataPath.v(406): (vopt-2241) Connection width does not match width of port 'COMPop'. The port definition is at: ../../src/Comparator.v(27).
+# ** Warning: ../../src/DataPath.v(415): (vopt-2241) Connection width does not match width of port 'wea'. The port definition is at: ../../src/dmem_blk_ram/dmem_blk_ram.v(66).
+# ** Warning: ../../src/DataPath.v(415): (vopt-2241) Connection width does not match width of port 'addra'. The port definition is at: ../../src/dmem_blk_ram/dmem_blk_ram.v(67).
+# ** Warning: ../../src/DataPath.v(415): (vopt-2241) Connection width does not match width of port 'dina'. The port definition is at: ../../src/dmem_blk_ram/dmem_blk_ram.v(68).
+# ** Warning: ../../src/DataPath.v(415): (vopt-2241) Connection width does not match width of port 'douta'. The port definition is at: ../../src/dmem_blk_ram/dmem_blk_ram.v(69).
+# ** Warning: ../../src/DataPath.v(443): (vopt-2241) Connection width does not match width of port 'Jump_Target'. The port definition is at: ../../src/JumpAddress.v(27).
+# ** Warning: ../../src/DataPath.v(452): (vopt-2241) Connection width does not match width of port 'DATA_MEM_W_EN'. The port definition is at: ../../src/MEM_CTRL.v(29).
+# ** Warning: ../../src/DataPath.v(452): (vopt-2241) Connection width does not match width of port 'INST_MEM_W_EN'. The port definition is at: ../../src/MEM_CTRL.v(30).
+# ** Warning: ../../src/DataPath.v(452): (vopt-2241) Connection width does not match width of port 'MEM_OUT_CTRL'. The port definition is at: ../../src/MEM_CTRL.v(31).
+# ** Warning: ../../src/DataPath.v(557): (vopt-2241) Connection width does not match width of port 'Data_MEM_Out'. The port definition is at: ../../src/LoadShifter.v(22).
+###### ../../src/MIPS150.v(104): 	);
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2685) [TFMPC] - Too few port connections for 'DataPath'.  Expected 33, found 18.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_32_PC_plus4'.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_32_PC'.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_32_INST'.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_1_RegWrite'.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_4_ALUop'.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_1_ALUsrc'.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_2_RegDest'.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_1_ZorS_EXT'.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_1_COMPop'.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_1_JAL'.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_2_BranchOrJump'.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_1_MemToReg'.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_3_LoadType'.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_1_Shamt'.
+# ** Warning: ../../src/MIPS150.v(104): (vopt-2718) [TFMPC] - Missing connection for port 'PipelineREG_1_3_MemWrite'.
+# //  ModelSim SE-64 10.1b_2 Jul  3 2012 Linux 2.6.32-279.5.1.el6.centos.plus.x86_64
+# //
+# //  Copyright 1991-2012 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading work.glbl(fast)
+# Loading work.MIPS150Testbench(fast)
+# Loading work.MIPS150(fast)
+# Loading work.Control(fast)
+# Loading work.DataPath(fast)
+# Loading work.imem_blk_ram(fast)
+# Loading work.MUXn_4(fast)
+# Loading work.MUXn_4(fast__1)
+# Loading work.RegFile(fast)
+# Loading work.ALU(fast)
+# Loading work.Comparator(fast)
+# Loading work.dmem_blk_ram(fast)
+# Loading work.UART(fast)
+# Loading work.IORegister(fast)
+# Loading work.UATransmit(fast)
+# Loading work.UAReceive(fast)
+# Loading work.Next_PC_Address(fast)
+# Loading work.JumpAddress(fast)
+# Loading work.MEM_CTRL(fast)
+# Loading work.MUXn_4(fast__2)
+# Loading work.MUXn_2(fast)
+# Loading work.LoadShifter(fast)
+# Loading work.hazardunit(fast)
+# ** Warning: (vsim-3017) ../../src/MIPS150.v(104): [TFMPC] - Too few port connections. Expected 33, found 18.
+#         Region: /MIPS150Testbench/DUT/DataPath
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_3_MemWrite'.
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_1_Shamt'.
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_3_LoadType'.
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_1_MemToReg'.
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_2_BranchOrJump'.
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_1_JAL'.
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_1_COMPop'.
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_1_ZorS_EXT'.
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_2_RegDest'.
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_1_ALUsrc'.
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_4_ALUop'.
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_1_RegWrite'.
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_32_INST'.
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_32_PC'.
+# ** Warning: (vsim-3722) ../../src/MIPS150.v(104): [TFMPC] - Missing connection for port 'PipelineREG_1_32_PC_plus4'.
+# ** Warning: (vsim-3015) ../../src/DataPath.v(400): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'A'. The port definition is at: ../../src/ALU.v(16).
+#         Region: /MIPS150Testbench/DUT/DataPath/ALU
+# ** Warning: (vsim-3015) ../../src/DataPath.v(400): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'B'. The port definition is at: ../../src/ALU.v(16).
+#         Region: /MIPS150Testbench/DUT/DataPath/ALU
+# ** Warning: (vsim-3015) ../../src/DataPath.v(406): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'A'. The port definition is at: ../../src/Comparator.v(25).
+#         Region: /MIPS150Testbench/DUT/DataPath/Comparator
+# ** Warning: (vsim-3015) ../../src/DataPath.v(406): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'B'. The port definition is at: ../../src/Comparator.v(26).
+#         Region: /MIPS150Testbench/DUT/DataPath/Comparator
+# ** Warning: (vsim-3015) ../../src/DataPath.v(406): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'COMPop'. The port definition is at: ../../src/Comparator.v(27).
+#         Region: /MIPS150Testbench/DUT/DataPath/Comparator
+# ** Warning: (vsim-3015) ../../src/DataPath.v(415): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'wea'. The port definition is at: ../../src/dmem_blk_ram/dmem_blk_ram.v(66).
+#         Region: /MIPS150Testbench/DUT/DataPath/DATA_MEM
+# ** Warning: (vsim-3015) ../../src/DataPath.v(415): [PCDPC] - Port size (12 or 12) does not match connection size (1) for port 'addra'. The port definition is at: ../../src/dmem_blk_ram/dmem_blk_ram.v(67).
+#         Region: /MIPS150Testbench/DUT/DataPath/DATA_MEM
+# ** Warning: (vsim-3015) ../../src/DataPath.v(415): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'dina'. The port definition is at: ../../src/dmem_blk_ram/dmem_blk_ram.v(68).
+#         Region: /MIPS150Testbench/DUT/DataPath/DATA_MEM
+# ** Warning: (vsim-3015) ../../src/DataPath.v(415): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'douta'. The port definition is at: ../../src/dmem_blk_ram/dmem_blk_ram.v(69).
+#         Region: /MIPS150Testbench/DUT/DataPath/DATA_MEM
+# ** Warning: (vsim-3015) ../../src/DataPath.v(443): [PCDPC] - Port size (1 or 1) does not match connection size (32) for port 'Jump_Target'. The port definition is at: ../../src/JumpAddress.v(27).
+#         Region: /MIPS150Testbench/DUT/DataPath/JumpAddress
+# ** Warning: (vsim-3015) ../../src/DataPath.v(452): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'DATA_MEM_W_EN'. The port definition is at: ../../src/MEM_CTRL.v(29).
+#         Region: /MIPS150Testbench/DUT/DataPath/MEM_CTRL
+# ** Warning: (vsim-3015) ../../src/DataPath.v(452): [PCDPC] - Port size (4 or 4) does not match connection size (1) for port 'INST_MEM_W_EN'. The port definition is at: ../../src/MEM_CTRL.v(30).
+#         Region: /MIPS150Testbench/DUT/DataPath/MEM_CTRL
+# ** Warning: (vsim-3015) ../../src/DataPath.v(452): [PCDPC] - Port size (2 or 2) does not match connection size (1) for port 'MEM_OUT_CTRL'. The port definition is at: ../../src/MEM_CTRL.v(31).
+#         Region: /MIPS150Testbench/DUT/DataPath/MEM_CTRL
+# ** Warning: (vsim-3015) ../../src/DataPath.v(557): [PCDPC] - Port size (32 or 32) does not match connection size (1) for port 'Data_MEM_Out'. The port definition is at: ../../src/LoadShifter.v(22).
+#         Region: /MIPS150Testbench/DUT/DataPath/LoadShifter
+file copy -force ../../../software/smallCode/smallCode.mif imem_blk_ram.mif
+file copy -force ../../../software/smallCode/smallCode.mif dmem_blk_ram.mif
+add wave MIPS150Testbench/*
+add wave MIPS150Testbench/DUT_MIPS150/*
+# (vish-4014) No objects found matching 'MIPS150Testbench/DUT_MIPS150/*'.
+add wave MIPS150Testbench/DUT_MIPS150/Control/*
+# (vish-4014) No objects found matching 'MIPS150Testbench/DUT_MIPS150/Control/*'.
+add wave MIPS150Testbench/DUT_MIPS150/DataPath/*
+# (vish-4014) No objects found matching 'MIPS150Testbench/DUT_MIPS150/DataPath/*'.
+run 10000us
+#  Block Memory Generator CORE Generator module loading initial data...
+#  Block Memory Generator data initialization complete.
+# Block Memory Generator CORE Generator module MIPS150Testbench.DUT.DataPath.INST_MEM.inst.blk_mem_gen_v4_3_inst is using a behavioral model for simulation which will not precisely model memory collision behavior.
+#  Block Memory Generator CORE Generator module loading initial data...
+#  Block Memory Generator data initialization complete.
+# Block Memory Generator CORE Generator module MIPS150Testbench.DUT.DataPath.DATA_MEM.inst.blk_mem_gen_v4_3_inst is using a behavioral model for simulation which will not precisely model memory collision behavior.
+# 
+# <EOF> 
+cp build/vsim.wlf results/MIPS150.wlf

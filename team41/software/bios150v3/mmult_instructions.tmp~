@@ -1,0 +1,53 @@
+
+10000000 <_start>:
+10000008 <ascii_dec_to_uint8>:
+1000012c <ascii_dec_to_uint16>:
+10000250 <ascii_dec_to_uint32>:
+10000370 <ascii_hex_to_uint8>:
+10000598 <ascii_hex_to_uint16>:
+100007c0 <ascii_hex_to_uint32>:
+100009e8 <uint8_to_ascii_hex>:
+10000b64 <uint16_to_ascii_hex>:
+10000ce0 <uint32_to_ascii_hex>:
+10000e5c <run_and_time>:
+10000f88 <times>:
+100010c8 <mmult>:
+100012f0 <generate_matrices>:
+1000144c <main>:
+100014b0 <uwrite_int8>:
+100014f4 <uwrite_int8s>:
+10001578 <uread_int8>:
+addiu
+addu
+andi
+beqz
+bltz
+bne
+bnez
+Disassembly of section .text:
+j
+jal
+jalr
+jr
+lb
+lbu
+lhu
+li
+lui
+lw
+mmult.elf:     file format elf32-bigmips
+nop
+ori
+sb
+sh
+sll
+slt
+slti
+sltiu
+sltu
+sra
+srl
+srlv
+subu
+sw
+xor

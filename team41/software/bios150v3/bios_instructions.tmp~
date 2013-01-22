@@ -1,0 +1,55 @@
+
+40000000 <_start>:
+40000008 <ascii_dec_to_uint8>:
+4000012c <ascii_dec_to_uint16>:
+40000250 <ascii_dec_to_uint32>:
+40000370 <ascii_hex_to_uint8>:
+40000598 <ascii_hex_to_uint16>:
+400007c0 <ascii_hex_to_uint32>:
+400009e8 <uint8_to_ascii_hex>:
+40000b64 <uint16_to_ascii_hex>:
+40000ce0 <uint32_to_ascii_hex>:
+40000e5c <read_n>:
+40000efc <read_token>:
+40001048 <store>:
+400010f4 <main>:
+40001608 <fill_int8v>:
+40001684 <fill_uint8v>:
+40001700 <strcmp>:
+400017ac <strlen>:
+40001808 <uwrite_int8>:
+4000184c <uwrite_int8s>:
+400018d0 <uread_int8>:
+addiu
+addu
+andi
+beq
+beqz
+bios150v3.elf:     file format elf32-bigmips
+bltz
+bne
+bnez
+Disassembly of section .text:
+j
+jal
+jalr
+jr
+lb
+lbu
+lhu
+li
+lui
+lw
+nop
+ori
+sb
+sh
+sll
+slt
+slti
+sltiu
+sltu
+srlv
+subu
+sw
+xor

@@ -1,0 +1,290 @@
+.section    .start
+.global     _start
+
+_start:
+addiu		$sp,	$sp,	-20
+sw			$ra,	16($sp)
+mfc0		$k0,	$13				#Cause
+mfc0		$k1,	$12				#Status
+andi		$k1,	$k1,	0xFC00
+and			$k0,	$k0,	$k1
+
+andi		$k1,	$k0,	1<<15
+bgtz		$k1,	_TIMER_ISR
+
+andi		$k1,	$k0,	1<<14
+bgtz		$k1,	_RTC_ISR
+
+andi		$k1,	$k0,	1<<11
+bgtz		$k1,	_UATx_ISR
+
+andi		$k1,	$k0,	1<<10
+bgtz		$k1,	_UARx_ISR
+
+
+_TIMER_ISR:					#Print mm:ss every second
+lui			$k1,	0x1FFF
+lw			$k0,	0x2C($k1)	#k0=SS
+addiu		$k1,	$0,		60
+addiu		$k0,	$k0,	1	#SS++
+jal			_DIV
+lui			$k1,	0x1FFF
+lw			$k1,	0x28($k1)	#k1=MM
+addu			$k0,	$k1,	$k0
+lui			$k1,	0x1FFF
+sw			$k0,	0x28($k1)	#Update Minutes
+lw			$k0,	0x2C($k1)	#k0=SS
+addiu		$k1,	$0,		60
+addiu		$k0,	$k0,	1	#SS++
+jal			_MOD
+lui			$k1,	0x1FFF
+sw			$k0,	0x2C($k1)	#Update Seconds
+lw			$k0,	0x24($k1)	#TIMER_STATUS
+blez			$k0,	_END_TIMER_ISR
+lw			$k0,	0x2C($k1)
+lw			$k1,	0x28($k1)
+jal			_PUSH_MM_SS
+
+_END_TIMER_ISR:
+mfc0		$k1,	$11			#Compare
+li			$k0,	50000000	#<--------------------------------------------------------------------
+addu		$k1, 	$k0,	$k1
+mtc0		$k1,	$11			#move back to cop
+mfc0		$k1,	$13				#Cause
+lui			$k0,	0xFFFF
+ori			$k0,	$k0,	0x7FFF	#0111_1111_1111_1111	
+and			$k1,	$k1,	$k0	
+mtc0		$k1,	$13				#Cause
+j			_DONE
+
+
+_PUSH_MM_SS:					#$k1 = mm, $k0 = ss
+addiu		$sp,	$sp,	-20
+sw			$t0,	16($sp)
+sw			$ra,	12($sp)
+sw			$t1,	8($sp)
+addu		$t0,	$k0,	$0
+addu		$t1,	$k1,	$0
+addu		$k0, 	$0, 	$k1
+addiu		$k1,	$0,		10
+jal			_DIV
+addiu		$k0,	$k0,	0x30	#ASCII 0
+jal			_PUSH_TO_BUFFER			#ASCII mm/10
+addiu		$k1,	$0,		10
+addu		$k0,	$0,	$t1
+jal			_MOD
+addiu		$k0,	$k0,	0x30	#ASCII 0
+jal			_PUSH_TO_BUFFER			#ASCII mm%10
+addiu		$k0,	$0,	0x3A		#ASCII :
+jal			_PUSH_TO_BUFFER			#ASCII mm%10
+addu			$k0,	$t0,	$0
+addiu		$k1,	$0,		10
+jal			_DIV
+addiu		$k0,	$k0,	0x30	#ASCII 0
+jal			_PUSH_TO_BUFFER			#ASCII mm/10
+addiu		$k1,	$0,		10
+addu		$k0,	$0,	$t0
+jal			_MOD
+addiu		$k0,	$k0,	0x30	#ASCII 0
+jal			_PUSH_TO_BUFFER			#ASCII mm%10
+addiu		$k0,	$0,	0xd			#ASCII newline character
+jal			_PUSH_TO_BUFFER	
+addiu		$k0,	$0,	0xa			#ASCII newline character
+jal			_PUSH_TO_BUFFER	
+lw			$t0,	16($sp)
+lw			$t1,	8($sp)
+lw			$ra,	12($sp)
+addiu		$sp,	$sp,	20
+jr			$ra
+
+_PUSH_TO_BUFFER:					#BUFFER[inIdx]=k0
+addiu		$sp,	$sp,	-24
+sw			$t2,	20($sp)
+sw			$ra,	16($sp)
+sw			$t0,	12($sp)
+sw			$t1,	8($sp)
+sw			$k0,	4($sp)
+sw			$k1,	0($sp)
+lui			$k1,	0x8000
+lw			$k1,	0($k1)
+bgtz		$k1,	_TO_UART
+lui			$t0,	0x1FFF
+lw			$k0,	4($t0)			#k0=*inIdx
+addiu		$k0,	$k0,	0x1
+addiu		$k1,	$0,		20	
+jal			_MOD					#k0=(inIdx++)%20
+lw			$t1,	8($t0)			#t1=OutIdx
+addu		$t2,	$k0,	$0
+beq			$t1,	$k0, 	_END_PUSH_TO_BUFFER
+lw			$k0,	4($t0)
+addiu		$t0,	$t0,	0xc
+addu		$k1,	$k0,	$t0		#k0=BUFFER+*inIdx
+lw			$t1,	4($sp)
+sb			$t1,	0($k1)
+addu		$k0,	$t2,	$0
+lui			$t0,	0x1FFF			#update inIdx
+sw			$k0,	4($t0)
+j			_END_PUSH_TO_BUFFER
+
+_TO_UART:
+lui			$k1,	0x8000
+sw			$k0,	0x8($k1)
+
+_END_PUSH_TO_BUFFER:
+lw			$t2,	20($sp)
+lw			$ra,	16($sp)
+lw			$t0,	12($sp)
+lw			$t1,	8($sp)
+lw			$k0,	4($sp)
+lw			$k1,	0($sp)
+addiu		$sp,	$sp,	24
+jr			$ra
+
+_RTC_ISR:		#Print SW_RTC++
+lui			$k1,	0x1FFF			#0x1FFF_0000 = SW_RTC (Stored in DMEM)
+lw			$k0,	0($k1)			#$k0 = SW_RTC
+addiu		$k0,	$k0,	0x1
+sw			$k0,	0($k1)			#SW_RTC++
+mfc0		$k1,	$13				#Cause
+lui			$k0,	0xFFFF
+ori			$k0,	$k0,	0xBFFF	#1011_1111_1111_1111	
+and			$k1,	$k1,	$k0	
+mtc0		$k1,	$13				#Cause
+j			_DONE
+
+_UATx_ISR:		#Transmit the next character
+lui			$k0,	0x1FFF			
+lw			$k1,	4($k0)			#0x1FFF_0004 = inIdx (Stored in DMEM)
+lw			$k0,	8($k0)			#0x1FFF_0008 = outIdx (Stored in DMEM)
+beq			$k0,	$k1,	_DONE_Tx
+lui			$k1,	0x1FFF
+addiu		$k1,	$k1,	0xC		#0x1FFF_000C= BUFFER (Stored in DMEM)
+addu			$k1,	$k1,	$k0
+lb			$k1,	0($k1)			#BUFFER[inIdx]
+lui			$k0,	0x8000
+lw			$k0,	0($k0)
+blez		$k0,	_DONE_Tx			#UARTx READY?
+lui			$k0,	0x8000
+sw			$k1,	8($k0)			#Send Character
+lui			$k0,	0x1FFF
+lw			$k0,	8($k0)			#0x1FFF_0004 = outIdx (Stored in DMEM)
+addiu		$k0,	$k0,	0x1		#outIdx++
+addiu		$k1,	$0,	20
+jal			_MOD					#(outIdx++)%20 
+lui			$k1,	0x1FFF
+sw			$k0,	8($k1)			#Store OutIndex
+_DONE_Tx:
+mfc0		$k1,	$13				#Cause
+lui			$k0,	0xFFFF
+ori			$k0,	$k0,	0xF7FF	#1111_0111_1111_1111	
+and			$k1,	$k1,	$k0	
+mtc0		$k1,	$13				#Cause
+j			_DONE
+
+_UARx_ISR:
+lui			$k0,	0x8000
+lw			$k1,	0x4($k0)
+blez		$k1,	_DONE
+lw			$k0,	0xC($k0)
+jal			_PUSH_TO_BUFFER	
+addiu		$k1,	$0,		0x65	#ASCII 	e
+beq			$k1,	$k0,	_ENABLE_TIMER
+addiu		$k1,	$0,		0x64	#ASCII 	d
+beq			$k1,	$k0,	_DISABLE_TIMER
+addiu		$k1,	$0,		0x72	#ASCII 	r
+beq			$k1,	$k0,	_UPDATE_STATUS
+addiu		$k1,	$0,		0x52	#ASCII 	R
+beq			$k1,	$k0,	_UPDATE_STATUS
+addiu		$k1,	$0,		0x76	#ASCII 	v
+beq			$k1,	$k0,	_UPDATE_STATUS
+addiu		$k1,	$0,		0x56	#ASCII 	V
+beq			$k1,	$k0,	_UPDATE_STATUS
+j			_DONE_Rx				#STATUS unchanged 
+_ENABLE_TIMER:
+lui			$k1,	0x1FFF
+addiu		$k0,	$0,		1
+sw			$k0,	0x24($k1)	#TIMER_STATUS
+j			_DONE_Rx
+
+_DISABLE_TIMER:
+lui			$k1,	0x1FFF
+sw			$0,		0x24($k1)	#TIMER_STATUS
+j			_DONE_Rx
+
+_UPDATE_STATUS:
+lui			$k0,	0x1FFF
+sw			$k1,	0x20($k0)
+j			_DONE_Rx
+_DONE_Rx:
+mfc0		$k1,	$13				#Cause
+lui			$k0,	0xFFFF
+ori			$k0,	$k0,		0xFBFF	#1111_1011_1111_1111	
+and			$k1,	$k1,	$k0	
+mtc0		$k1,	$13				#Cause
+j			_DONE
+
+_DIV:								#k0	= $k0/$k1
+addiu		$sp,	$sp,	-20
+sw			$ra,	16($sp)
+sw			$a0,	12($sp)
+sw			$t0,	8($sp)
+and			$a0,	$0,		$0
+_DIV_TEST:
+sltu		$t0,	$k0,	$k1
+bgtz			$t0,	_END_DIV
+subu			$k0,	$k0,	$k1
+addiu		$a0,	$a0,	1
+j			_DIV_TEST
+_END_DIV:
+addu		$k0,	$a0,	$0
+lw			$ra,	16($sp)
+lw			$a0,	12($sp)
+lw			$t0,	8($sp)
+addiu		$sp,	$sp,	20
+jr			$ra
+
+_MULT:								#k0	= $k0*$k1
+addiu		$sp,	$sp,	-20
+sw			$ra,	16($sp)
+sw			$a0,	12($sp)
+sw			$t0,	8($sp)
+and			$a0,	$0,		$0
+_MULT_TEST:
+beq			$k1,	$0,		_END_MULT
+addiu		$k1,	$k1,	-1
+addu		$a0,	$a0,	$k0
+j			_MULT_TEST
+_END_MULT:
+addu		$k0,	$a0,	$0
+lw			$ra,	16($sp)
+lw			$a0,	12($sp)
+lw			$t0,	8($sp)
+addiu		$sp,	$sp,	20
+jr			$ra
+
+_MOD:								#k0	= $k0%$k1
+addiu		$sp,	$sp,	-20
+sw			$ra,	16($sp)
+sw			$a0,	12($sp)
+sw			$t0,	8($sp)
+_MOD_TEST:
+sltu		$t0,	$k0,	$k1
+bgtz			$t0,	_END_MOD
+subu		$k0,	$k0,	$k1
+j			_MOD_TEST
+_END_MOD:
+lw			$ra,	16($sp)
+lw			$a0,	12($sp)
+lw			$t0,	8($sp)
+addiu		$sp,	$sp,	20
+jr			$ra
+
+_DONE:
+lw			$ra,	16($sp)
+addiu		$sp,	$sp,	20
+mfc0		$k0,	$14			#EPC
+mfc0		$k1,	$12			#STATUS
+ori			$k1,	$k1,	0x1
+mtc0		$k1,	$12			#STATUS
+jr			$k0
+

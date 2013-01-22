@@ -1,0 +1,10 @@
+start EchoTestbenchCaches
+file copy -force ../../../software/APP/app.mif bios_mem.mif
+file copy -force ../../../software/ISR/ISR.mif isr_mem.mif
+add wave EchoTestbenchCaches/*
+add wave EchoTestbenchCaches/mem_arch/*
+add wave EchoTestbenchCaches/mem_arch/dcache/*
+add wave EchoTestbenchCaches/mem_arch/icache/*
+add wave EchoTestbenchCaches/DUT/DataPath/*
+add wave EchoTestbenchCaches/DUT/Control/*
+run 100us

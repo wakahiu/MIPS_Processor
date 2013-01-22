@@ -1,0 +1,343 @@
+
+ISR.elf:     file format elf32-bigmips
+
+
+Disassembly of section .text:
+
+c0000000 <_start>:
+c0000000:	27bdffec 	addiu	sp,sp,-20
+c0000004:	afbf0010 	sw	ra,16(sp)
+c0000008:	401a6800 	mfc0	k0,c0_cause
+c000000c:	401b6000 	mfc0	k1,c0_sr
+c0000010:	00000000 	nop
+c0000014:	337bfc00 	andi	k1,k1,0xfc00
+c0000018:	035bd024 	and	k0,k0,k1
+c000001c:	335b8000 	andi	k1,k0,0x8000
+c0000020:	1f60000a 	bgtz	k1,c000004c <_TIMER_ISR>
+c0000024:	00000000 	nop
+c0000028:	335b4000 	andi	k1,k0,0x4000
+c000002c:	1f60007d 	bgtz	k1,c0000224 <_RTC_ISR>
+c0000030:	00000000 	nop
+c0000034:	335b0800 	andi	k1,k0,0x800
+c0000038:	1f600086 	bgtz	k1,c0000254 <_UATx_ISR>
+c000003c:	00000000 	nop
+c0000040:	335b0400 	andi	k1,k0,0x400
+c0000044:	1f6000a3 	bgtz	k1,c00002d4 <_UARx_ISR>
+c0000048:	00000000 	nop
+
+c000004c <_TIMER_ISR>:
+c000004c:	3c1b1fff 	lui	k1,0x1fff
+c0000050:	8f7a002c 	lw	k0,44(k1)
+c0000054:	241b003c 	li	k1,60
+c0000058:	0c0000e2 	jal	c0000388 <_DIV>
+c000005c:	275a0001 	addiu	k0,k0,1
+c0000060:	3c1b1fff 	lui	k1,0x1fff
+c0000064:	8f7b0028 	lw	k1,40(k1)
+c0000068:	00000000 	nop
+c000006c:	037ad021 	addu	k0,k1,k0
+c0000070:	3c1b1fff 	lui	k1,0x1fff
+c0000074:	af7a0028 	sw	k0,40(k1)
+c0000078:	8f7a002c 	lw	k0,44(k1)
+c000007c:	241b003c 	li	k1,60
+c0000080:	0c000103 	jal	c000040c <_MOD>
+c0000084:	275a0001 	addiu	k0,k0,1
+c0000088:	3c1b1fff 	lui	k1,0x1fff
+c000008c:	af7a002c 	sw	k0,44(k1)
+c0000090:	8f7a0024 	lw	k0,36(k1)
+c0000094:	00000000 	nop
+c0000098:	1b400005 	blez	k0,c00000b0 <_END_TIMER_ISR>
+c000009c:	00000000 	nop
+c00000a0:	8f7a002c 	lw	k0,44(k1)
+c00000a4:	8f7b0028 	lw	k1,40(k1)
+c00000a8:	0c000039 	jal	c00000e4 <_PUSH_MM_SS>
+c00000ac:	00000000 	nop
+
+c00000b0 <_END_TIMER_ISR>:
+c00000b0:	401b5800 	mfc0	k1,$11
+c00000b4:	3c1a02fa 	lui	k0,0x2fa
+c00000b8:	375af080 	ori	k0,k0,0xf080
+c00000bc:	035bd821 	addu	k1,k0,k1
+c00000c0:	409b5800 	mtc0	k1,$11
+c00000c4:	00000000 	nop
+c00000c8:	401b6800 	mfc0	k1,c0_cause
+c00000cc:	3c1affff 	lui	k0,0xffff
+c00000d0:	375a7fff 	ori	k0,k0,0x7fff
+c00000d4:	037ad824 	and	k1,k1,k0
+c00000d8:	409b6800 	mtc0	k1,c0_cause
+c00000dc:	08000111 	j	c0000444 <_DONE>
+c00000e0:	00000000 	nop
+
+c00000e4 <_PUSH_MM_SS>:
+c00000e4:	27bdffec 	addiu	sp,sp,-20
+c00000e8:	afa80010 	sw	t0,16(sp)
+c00000ec:	afbf000c 	sw	ra,12(sp)
+c00000f0:	afa90008 	sw	t1,8(sp)
+c00000f4:	03404021 	move	t0,k0
+c00000f8:	03604821 	move	t1,k1
+c00000fc:	001bd021 	addu	k0,zero,k1
+c0000100:	0c0000e2 	jal	c0000388 <_DIV>
+c0000104:	241b000a 	li	k1,10
+c0000108:	0c00005f 	jal	c000017c <_PUSH_TO_BUFFER>
+c000010c:	275a0030 	addiu	k0,k0,48
+c0000110:	241b000a 	li	k1,10
+c0000114:	0c000103 	jal	c000040c <_MOD>
+c0000118:	0009d021 	addu	k0,zero,t1
+c000011c:	0c00005f 	jal	c000017c <_PUSH_TO_BUFFER>
+c0000120:	275a0030 	addiu	k0,k0,48
+c0000124:	0c00005f 	jal	c000017c <_PUSH_TO_BUFFER>
+c0000128:	241a003a 	li	k0,58
+c000012c:	0100d021 	move	k0,t0
+c0000130:	0c0000e2 	jal	c0000388 <_DIV>
+c0000134:	241b000a 	li	k1,10
+c0000138:	0c00005f 	jal	c000017c <_PUSH_TO_BUFFER>
+c000013c:	275a0030 	addiu	k0,k0,48
+c0000140:	241b000a 	li	k1,10
+c0000144:	0c000103 	jal	c000040c <_MOD>
+c0000148:	0008d021 	addu	k0,zero,t0
+c000014c:	0c00005f 	jal	c000017c <_PUSH_TO_BUFFER>
+c0000150:	275a0030 	addiu	k0,k0,48
+c0000154:	0c00005f 	jal	c000017c <_PUSH_TO_BUFFER>
+c0000158:	241a000d 	li	k0,13
+c000015c:	0c00005f 	jal	c000017c <_PUSH_TO_BUFFER>
+c0000160:	241a000a 	li	k0,10
+c0000164:	8fa80010 	lw	t0,16(sp)
+c0000168:	8fa90008 	lw	t1,8(sp)
+c000016c:	8fbf000c 	lw	ra,12(sp)
+c0000170:	27bd0014 	addiu	sp,sp,20
+c0000174:	03e00008 	jr	ra
+c0000178:	00000000 	nop
+
+c000017c <_PUSH_TO_BUFFER>:
+c000017c:	27bdffe8 	addiu	sp,sp,-24
+c0000180:	afaa0014 	sw	t2,20(sp)
+c0000184:	afbf0010 	sw	ra,16(sp)
+c0000188:	afa8000c 	sw	t0,12(sp)
+c000018c:	afa90008 	sw	t1,8(sp)
+c0000190:	afba0004 	sw	k0,4(sp)
+c0000194:	afbb0000 	sw	k1,0(sp)
+c0000198:	3c1b8000 	lui	k1,0x8000
+c000019c:	8f7b0000 	lw	k1,0(k1)
+c00001a0:	00000000 	nop
+c00001a4:	1f600015 	bgtz	k1,c00001fc <_TO_UART>
+c00001a8:	00000000 	nop
+c00001ac:	3c081fff 	lui	t0,0x1fff
+c00001b0:	8d1a0004 	lw	k0,4(t0)
+c00001b4:	00000000 	nop
+c00001b8:	275a0001 	addiu	k0,k0,1
+c00001bc:	0c000103 	jal	c000040c <_MOD>
+c00001c0:	241b0014 	li	k1,20
+c00001c4:	8d090008 	lw	t1,8(t0)
+c00001c8:	03405021 	move	t2,k0
+c00001cc:	113a000d 	beq	t1,k0,c0000204 <_END_PUSH_TO_BUFFER>
+c00001d0:	00000000 	nop
+c00001d4:	8d1a0004 	lw	k0,4(t0)
+c00001d8:	2508000c 	addiu	t0,t0,12
+c00001dc:	0348d821 	addu	k1,k0,t0
+c00001e0:	8fa90004 	lw	t1,4(sp)
+c00001e4:	00000000 	nop
+c00001e8:	a3690000 	sb	t1,0(k1)
+c00001ec:	0140d021 	move	k0,t2
+c00001f0:	3c081fff 	lui	t0,0x1fff
+c00001f4:	08000081 	j	c0000204 <_END_PUSH_TO_BUFFER>
+c00001f8:	ad1a0004 	sw	k0,4(t0)
+
+c00001fc <_TO_UART>:
+c00001fc:	3c1b8000 	lui	k1,0x8000
+c0000200:	af7a0008 	sw	k0,8(k1)
+
+c0000204 <_END_PUSH_TO_BUFFER>:
+c0000204:	8faa0014 	lw	t2,20(sp)
+c0000208:	8fbf0010 	lw	ra,16(sp)
+c000020c:	8fa8000c 	lw	t0,12(sp)
+c0000210:	8fa90008 	lw	t1,8(sp)
+c0000214:	8fba0004 	lw	k0,4(sp)
+c0000218:	8fbb0000 	lw	k1,0(sp)
+c000021c:	03e00008 	jr	ra
+c0000220:	27bd0018 	addiu	sp,sp,24
+
+c0000224 <_RTC_ISR>:
+c0000224:	3c1b1fff 	lui	k1,0x1fff
+c0000228:	8f7a0000 	lw	k0,0(k1)
+c000022c:	00000000 	nop
+c0000230:	275a0001 	addiu	k0,k0,1
+c0000234:	af7a0000 	sw	k0,0(k1)
+c0000238:	401b6800 	mfc0	k1,c0_cause
+c000023c:	3c1affff 	lui	k0,0xffff
+c0000240:	375abfff 	ori	k0,k0,0xbfff
+c0000244:	037ad824 	and	k1,k1,k0
+c0000248:	409b6800 	mtc0	k1,c0_cause
+c000024c:	08000111 	j	c0000444 <_DONE>
+c0000250:	00000000 	nop
+
+c0000254 <_UATx_ISR>:
+c0000254:	3c1a1fff 	lui	k0,0x1fff
+c0000258:	8f5b0004 	lw	k1,4(k0)
+c000025c:	8f5a0008 	lw	k0,8(k0)
+c0000260:	00000000 	nop
+c0000264:	135b0014 	beq	k0,k1,c00002b8 <_DONE_Tx>
+c0000268:	00000000 	nop
+c000026c:	3c1b1fff 	lui	k1,0x1fff
+c0000270:	277b000c 	addiu	k1,k1,12
+c0000274:	037ad821 	addu	k1,k1,k0
+c0000278:	837b0000 	lb	k1,0(k1)
+c000027c:	3c1a8000 	lui	k0,0x8000
+c0000280:	8f5a0000 	lw	k0,0(k0)
+c0000284:	00000000 	nop
+c0000288:	1b40000b 	blez	k0,c00002b8 <_DONE_Tx>
+c000028c:	00000000 	nop
+c0000290:	3c1a8000 	lui	k0,0x8000
+c0000294:	af5b0008 	sw	k1,8(k0)
+c0000298:	3c1a1fff 	lui	k0,0x1fff
+c000029c:	8f5a0008 	lw	k0,8(k0)
+c00002a0:	00000000 	nop
+c00002a4:	275a0001 	addiu	k0,k0,1
+c00002a8:	0c000103 	jal	c000040c <_MOD>
+c00002ac:	241b0014 	li	k1,20
+c00002b0:	3c1b1fff 	lui	k1,0x1fff
+c00002b4:	af7a0008 	sw	k0,8(k1)
+
+c00002b8 <_DONE_Tx>:
+c00002b8:	401b6800 	mfc0	k1,c0_cause
+c00002bc:	3c1affff 	lui	k0,0xffff
+c00002c0:	375af7ff 	ori	k0,k0,0xf7ff
+c00002c4:	037ad824 	and	k1,k1,k0
+c00002c8:	409b6800 	mtc0	k1,c0_cause
+c00002cc:	08000111 	j	c0000444 <_DONE>
+c00002d0:	00000000 	nop
+
+c00002d4 <_UARx_ISR>:
+c00002d4:	3c1a8000 	lui	k0,0x8000
+c00002d8:	8f5b0004 	lw	k1,4(k0)
+c00002dc:	00000000 	nop
+c00002e0:	1b600058 	blez	k1,c0000444 <_DONE>
+c00002e4:	00000000 	nop
+c00002e8:	8f5a000c 	lw	k0,12(k0)
+c00002ec:	0c00005f 	jal	c000017c <_PUSH_TO_BUFFER>
+c00002f0:	00000000 	nop
+c00002f4:	241b0065 	li	k1,101
+c00002f8:	137a0012 	beq	k1,k0,c0000344 <_ENABLE_TIMER>
+c00002fc:	00000000 	nop
+c0000300:	241b0064 	li	k1,100
+c0000304:	137a0013 	beq	k1,k0,c0000354 <_DISABLE_TIMER>
+c0000308:	00000000 	nop
+c000030c:	241b0072 	li	k1,114
+c0000310:	137a0013 	beq	k1,k0,c0000360 <_UPDATE_STATUS>
+c0000314:	00000000 	nop
+c0000318:	241b0052 	li	k1,82
+c000031c:	137a0010 	beq	k1,k0,c0000360 <_UPDATE_STATUS>
+c0000320:	00000000 	nop
+c0000324:	241b0076 	li	k1,118
+c0000328:	137a000d 	beq	k1,k0,c0000360 <_UPDATE_STATUS>
+c000032c:	00000000 	nop
+c0000330:	241b0056 	li	k1,86
+c0000334:	137a000a 	beq	k1,k0,c0000360 <_UPDATE_STATUS>
+c0000338:	00000000 	nop
+c000033c:	080000db 	j	c000036c <_DONE_Rx>
+c0000340:	00000000 	nop
+
+c0000344 <_ENABLE_TIMER>:
+c0000344:	3c1b1fff 	lui	k1,0x1fff
+c0000348:	241a0001 	li	k0,1
+c000034c:	080000db 	j	c000036c <_DONE_Rx>
+c0000350:	af7a0024 	sw	k0,36(k1)
+
+c0000354 <_DISABLE_TIMER>:
+c0000354:	3c1b1fff 	lui	k1,0x1fff
+c0000358:	080000db 	j	c000036c <_DONE_Rx>
+c000035c:	af600024 	sw	zero,36(k1)
+
+c0000360 <_UPDATE_STATUS>:
+c0000360:	3c1a1fff 	lui	k0,0x1fff
+c0000364:	080000db 	j	c000036c <_DONE_Rx>
+c0000368:	af5b0020 	sw	k1,32(k0)
+
+c000036c <_DONE_Rx>:
+c000036c:	401b6800 	mfc0	k1,c0_cause
+c0000370:	3c1affff 	lui	k0,0xffff
+c0000374:	375afbff 	ori	k0,k0,0xfbff
+c0000378:	037ad824 	and	k1,k1,k0
+c000037c:	409b6800 	mtc0	k1,c0_cause
+c0000380:	08000111 	j	c0000444 <_DONE>
+c0000384:	00000000 	nop
+
+c0000388 <_DIV>:
+c0000388:	27bdffec 	addiu	sp,sp,-20
+c000038c:	afbf0010 	sw	ra,16(sp)
+c0000390:	afa4000c 	sw	a0,12(sp)
+c0000394:	afa80008 	sw	t0,8(sp)
+c0000398:	00002024 	and	a0,zero,zero
+
+c000039c <_DIV_TEST>:
+c000039c:	035b402b 	sltu	t0,k0,k1
+c00003a0:	1d000004 	bgtz	t0,c00003b4 <_END_DIV>
+c00003a4:	00000000 	nop
+c00003a8:	035bd023 	subu	k0,k0,k1
+c00003ac:	080000e7 	j	c000039c <_DIV_TEST>
+c00003b0:	24840001 	addiu	a0,a0,1
+
+c00003b4 <_END_DIV>:
+c00003b4:	0080d021 	move	k0,a0
+c00003b8:	8fbf0010 	lw	ra,16(sp)
+c00003bc:	8fa4000c 	lw	a0,12(sp)
+c00003c0:	8fa80008 	lw	t0,8(sp)
+c00003c4:	03e00008 	jr	ra
+c00003c8:	27bd0014 	addiu	sp,sp,20
+
+c00003cc <_MULT>:
+c00003cc:	27bdffec 	addiu	sp,sp,-20
+c00003d0:	afbf0010 	sw	ra,16(sp)
+c00003d4:	afa4000c 	sw	a0,12(sp)
+c00003d8:	afa80008 	sw	t0,8(sp)
+c00003dc:	00002024 	and	a0,zero,zero
+
+c00003e0 <_MULT_TEST>:
+c00003e0:	13600004 	beqz	k1,c00003f4 <_END_MULT>
+c00003e4:	00000000 	nop
+c00003e8:	277bffff 	addiu	k1,k1,-1
+c00003ec:	080000f8 	j	c00003e0 <_MULT_TEST>
+c00003f0:	009a2021 	addu	a0,a0,k0
+
+c00003f4 <_END_MULT>:
+c00003f4:	0080d021 	move	k0,a0
+c00003f8:	8fbf0010 	lw	ra,16(sp)
+c00003fc:	8fa4000c 	lw	a0,12(sp)
+c0000400:	8fa80008 	lw	t0,8(sp)
+c0000404:	03e00008 	jr	ra
+c0000408:	27bd0014 	addiu	sp,sp,20
+
+c000040c <_MOD>:
+c000040c:	27bdffec 	addiu	sp,sp,-20
+c0000410:	afbf0010 	sw	ra,16(sp)
+c0000414:	afa4000c 	sw	a0,12(sp)
+c0000418:	afa80008 	sw	t0,8(sp)
+
+c000041c <_MOD_TEST>:
+c000041c:	035b402b 	sltu	t0,k0,k1
+c0000420:	1d000003 	bgtz	t0,c0000430 <_END_MOD>
+c0000424:	00000000 	nop
+c0000428:	08000107 	j	c000041c <_MOD_TEST>
+c000042c:	035bd023 	subu	k0,k0,k1
+
+c0000430 <_END_MOD>:
+c0000430:	8fbf0010 	lw	ra,16(sp)
+c0000434:	8fa4000c 	lw	a0,12(sp)
+c0000438:	8fa80008 	lw	t0,8(sp)
+c000043c:	03e00008 	jr	ra
+c0000440:	27bd0014 	addiu	sp,sp,20
+
+c0000444 <_DONE>:
+c0000444:	8fbf0010 	lw	ra,16(sp)
+c0000448:	27bd0014 	addiu	sp,sp,20
+c000044c:	401a7000 	mfc0	k0,c0_epc
+c0000450:	401b6000 	mfc0	k1,c0_sr
+c0000454:	00000000 	nop
+c0000458:	377b0001 	ori	k1,k1,0x1
+c000045c:	409b6000 	mtc0	k1,c0_sr
+c0000460:	03400008 	jr	k0
+c0000464:	00000000 	nop
+
+Disassembly of section .reginfo:
+
+00000000 <.reginfo>:
+   0:	ac000710 	sw	zero,1808(zero)
+	...

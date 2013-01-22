@@ -1,0 +1,8 @@
+SECTIONS
+{
+    . = 0xC0000180;
+    .text : {
+        * (.start);
+        * (.text);
+    }
+}

@@ -1,0 +1,3 @@
+TARGET := App
+
+include ../Makefile.llvm.in

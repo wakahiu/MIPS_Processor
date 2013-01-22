@@ -1,0 +1,44 @@
+
+asmtest.elf:     file format elf32-bigmips
+
+
+Disassembly of section .text:
+
+40000000 <_start>:
+40000000:	3c104000 	lui	s0,0x4000
+40000004:	3c114000 	lui	s1,0x4000
+40000008:	36100014 	ori	s0,s0,0x14
+4000000c:	0800000c 	j	40000030 <_STOREbegin>
+40000010:	2611001c 	addiu	s1,s0,28
+
+40000014 <_TEST>:
+40000014:	24020010 	li	v0,16
+40000018:	3443ff00 	ori	v1,v0,0xff00
+4000001c:	00031fc2 	srl	v1,v1,0x1f
+40000020:	3443ff00 	ori	v1,v0,0xff00
+40000024:	3c04abff 	lui	a0,0xabff
+40000028:	00831825 	or	v1,a0,v1
+4000002c:	00031c03 	sra	v1,v1,0x10
+
+40000030 <_STOREbegin>:
+40000030:	3c03c000 	lui	v1,0xc000
+
+40000034 <_store>:
+40000034:	12110006 	beq	s0,s1,40000050 <_endStore>
+40000038:	00000000 	nop
+4000003c:	8e020000 	lw	v0,0(s0)
+40000040:	26100004 	addiu	s0,s0,4
+40000044:	ac620000 	sw	v0,0(v1)
+40000048:	0800000d 	j	40000034 <_store>
+4000004c:	24630004 	addiu	v1,v1,4
+
+40000050 <_endStore>:
+40000050:	3c04c000 	lui	a0,0xc000
+40000054:	0080f809 	jalr	a0
+40000058:	00000000 	nop
+
+Disassembly of section .reginfo:
+
+00000000 <.reginfo>:
+   0:	8003001c 	lb	v1,28(zero)
+	...
