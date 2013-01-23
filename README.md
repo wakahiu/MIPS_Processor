@@ -10,3 +10,5 @@ By
 
 Peter Wakahiu Njenga (U.C Berkeley EECS/MSE 2013) &
 Brittany Judoprasetijo (U.C Berkeley EECS 2013)
+
+This project is a combination of code written by EECS150 staff and the people listed above.
