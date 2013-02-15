@@ -6,6 +6,8 @@ MIPS CPU and GPU
 This project involved a 3 stage MIPS processor implemented on a Xilinx Virtex-5 FPGA.
 Hardware programming was done in Verilog and Software was written in C and Assembly language.
 
+http://www.youtube.com/watch?v=W7VfFRmecuI
+
 By
 
 Peter Wakahiu Njenga (U.C Berkeley EECS/MSE 2013) &
